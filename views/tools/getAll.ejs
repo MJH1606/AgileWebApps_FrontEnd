@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+</head>
+    <body >
+        <header>
+            <%- include('../partials/header') %>
+        </header>
+        <main class="flex flex-col items-center text-2xl">
+            <h1 class="text-4xl font-extrabold leading-loose px-4">
+            Tools</h1>
+            <% if (result.errorMessage!=null){ %>
+            <br>
+            <div role="alert">
+            &nbsp;<div class="text-2xl bg-red-500 text-white
+            font-bold rounded-t px-4 py-2">
+            Error - <%= result.errorMessage %>
+            </div>&nbsp;
+            </div>
+            <% } %>
+            <% if(result.tools !=null){ %>
+            <div>
+            <%- include('../partials/allTools') %>
+            </div>
+            <% } %>
+        </main>
+        <footer>
+            <%- include('../partials/footer') %>
+        </footer>
+    </body>
+</html>

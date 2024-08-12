@@ -1,0 +1,17 @@
+<div class="flex items-center justify-center">
+    <table class="table-auto text-2xl">
+        <th class="px-4 py-2">Id</th>
+        <th class="px-4 py-2">Description</th>
+        <th class="px-4 py-2">Hire Price</th>
+        <!-- loop through each of the rows returned-->
+        <% result.tools.data.forEach(function(row) { %>
+        <tr>
+            <td class="border px-4 py-2"><%= row.id %></td>
+            <td class="border px-4 py-2"><%= row.description %></td>
+            <td class="border px-4 py-2">£<%= row.hire_price %></td>
+        </tr>
+        <%
+        });
+        %>
+    </table>
+</div>
