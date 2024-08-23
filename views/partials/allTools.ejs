@@ -9,6 +9,20 @@
             <td class="border px-4 py-2"><%= row.id %></td>
             <td class="border px-4 py-2"><%= row.description %></td>
             <td class="border px-4 py-2">£<%= row.hire_price %></td>
+            
+            <td><!-- edit button action -->
+                <form action="/tools/getById" method="POST">
+                    <input type="hidden" name="id" value="<%=row.id %>">
+                    <input type='submit' value="Edit" class="px-2 py-2 hover:text-blue-500"/>
+                </form>
+            </td>
+            
+            <td><!-- delete button action -->
+                <form action="/tools/delete" method="POST">
+                    <input type="hidden" name="id" value="<%=row.id %>">
+                    <input type='submit' value="Delete" class="px-2 py-2 hover:text-red-500"/>
+                </form>
+            </td>
         </tr>
         <%
         });
