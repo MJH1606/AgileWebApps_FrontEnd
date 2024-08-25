@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 const toolsRouter = require('./routes/tools');
+const employeesRouter = require('./routes/employees')
+
 const compression = require('compression');
 
 var app = express();
@@ -21,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(compression());
 
 app.use('/tools', toolsRouter);
+app.use('/employees', employeesRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
