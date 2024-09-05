@@ -2,30 +2,30 @@ const axios = require("../config/http-common");
 
 getAll = async (req, res) => {
     let errorMessage;
-    let employees;
+    let skills;
     try {
-        employees = await axios.get("/api/employees");
+        skills = await axios.get("/api/skills");
     } catch (error) {
         errorMessage = "Unable to return records";
     }
-    res.render("employees/getAll", {
-        result: { employees, errorMessage },
+    res.render("skills/getAll", {
+        result: { skills, errorMessage },
     });
 };
 
 deleting = async (req, res) => {
-    const id = req.body.id;
+    const name = req.body.name;
     try {
-        if (id == null) {
-        throw new Error("Id missing");
+        if (name == null) {
+        throw new Error("Name missing");
         }
-        await axios.delete("/api/employees", { data: { id: id } });
-        res.redirect("/employees");
+        await axios.delete("/api/skills", { data: { name: name } });
+        res.redirect("/skills");
     } catch (error) {
         res.status(404).send(error.message);
     }
 };
-
+/*
 update = async(req, res) =>{
     let errorMessage;
     const employee = {
@@ -73,7 +73,7 @@ getById = async(req, res) => {
     try{
         const id =req.body.id;
         const result = await axios.get('/api/employees/' + id);
-        res.render("employees/edit", {
+        res.render("/employees/edit", {
             result
         });
     }
@@ -81,7 +81,7 @@ getById = async(req, res) => {
         res.send(error.message);
     }
 };
-/*
+
 addPage = async (req, res) => {
     res.render("tools/add");
 };
@@ -114,4 +114,4 @@ create = async (req, res) => {
 
 module.exports = {update, getById, create, addPage, deleting, getAll};
 */
-module.exports = {getAll, deleting, getById, update};
+module.exports = {getAll, deleting};

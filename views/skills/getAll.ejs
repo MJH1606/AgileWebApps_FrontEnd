@@ -10,7 +10,7 @@
         <%- include('../partials/navbar') %>
         <main style="margin-left: 200px; margin-top: 80px; padding: 20px;" class="flex flex-col items-center text-2xl">
             <h1 class="text-4xl font-extrabold leading-loose px-4">
-            Employees</h1>
+            Skills</h1>
             <% if (result.errorMessage!=null){ %>
             <br>
             <div role="alert">
@@ -20,9 +20,9 @@
             </div>&nbsp;
             </div>
             <% } %>
-            <% if(result.employees !=null){ %>
+            <% if(result.skills !=null){ %>
             <div>
-            <%- include('../partials/allEmployees') %>
+            <%- include('../partials/allSkills') %>
             </div>
             <% } %>
         </main>

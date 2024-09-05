@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 const toolsRouter = require('./routes/tools');
 const employeesRouter = require('./routes/employees')
+const skillsRouter = require('./routes/skills');
 
 const compression = require('compression');
 
@@ -24,6 +25,11 @@ app.use(compression());
 
 app.use('/tools', toolsRouter);
 app.use('/employees', employeesRouter)
+app.use('/skills', skillsRouter)
+
+app.use("/", (req, res) => {
+  res.render('index')
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
