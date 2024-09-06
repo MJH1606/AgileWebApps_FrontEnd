@@ -1,11 +1,9 @@
 const axios = require('axios');
 
-//Base URL to call
-const axiosInstance = axios.create({
-    baseURL: "http://localhost:8900",
-    headers: {
-        "Content-type": "application/json"
-    }
+const instance = axios.create({
+    baseURL: 'http://localhost:8900', // Change this to your actual API base URL
+    timeout: 1000,
+    headers: {'Content-Type': 'application/json'}
 });
 
-module.exports = axiosInstance;
+module.exports = instance;

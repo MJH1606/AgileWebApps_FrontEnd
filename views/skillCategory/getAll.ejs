@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <style>
+        .button-group {
+            display: flex;
+            gap: 2px; 
+        }
+
+        .button-group form {
+            margin: 0; 
+        }
+
+        .button-group input[type="submit"] {
+            margin: 0; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <%- include('../partials/header') %>
+    </header>
+    <%- include('../partials/navbar') %>
+    <main style="margin-left: 200px; margin-top: 80px; padding: 20px;" class="flex flex-col items-center text-2xl">
+        <h1 class="text-4xl font-extrabold leading-loose px-4">
+        Skill Category</h1>
+        
+        <% if (result.errorMessage) { %>
+            <br>
+            <div role="alert">
+                <div class="text-2xl bg-red-500 text-white font-bold rounded-t px-4 py-2">
+                    Error - <%= result.errorMessage %>
+                </div>
+            </div>
+        <% } %>
+
+        <% if(result.skillCategory && result.skillCategory.length > 0){ %>
+            <div class="flex items-center justify-center">
+                <table class="table-auto text-2xl">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2">ID</th>
+                            <th class="px-4 py-2">Category</th>
+                            <th class="px-4 py-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% result.skillCategory.forEach(function(row) { %>
+                            <tr>
+                                <td class="border px-4 py-2"><%= row.id %></td>
+                                <td class="border px-4 py-2"><%= row.name %></td>
+                                <td>
+                                    <div class="button-group"> <!-- Button container -->
+                                        <form action="/skillcategory/getById" method="POST" style="display: inline;">
+                                            <input type="hidden" name="id" value="<%= row.id %>">
+                                            <input type='submit' value="Edit" class="px-2 py-2 hover:text-blue-500"/>
+                                        </form>
+                                        <form action="/skillcategory/delete" method="POST" style="display: inline;">
+                                            <input type="hidden" name="id" value="<%= row.id %>">
+                                            <input type='submit' value="Delete" class="px-2 py-2 hover:text-red-500"/>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %>
+            <p>No categories found.</p>
+        <% } %>
+    </main>
+    <footer>
+        <%- include('../partials/footer') %>
+    </footer>
+</body>
+</html>

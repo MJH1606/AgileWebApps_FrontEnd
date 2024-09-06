@@ -7,6 +7,7 @@ var logger = require('morgan');
 const toolsRouter = require('./routes/tools');
 const employeesRouter = require('./routes/employees')
 const skillsRouter = require('./routes/skills');
+const skillCategoryRouter = require('./routes/skillCategory');
 
 const compression = require('compression');
 
@@ -26,6 +27,7 @@ app.use(compression());
 app.use('/tools', toolsRouter);
 app.use('/employees', employeesRouter)
 app.use('/skills', skillsRouter)
+app.use('/skillcategory', skillCategoryRouter)
 
 app.use("/", (req, res) => {
   res.render('index')
