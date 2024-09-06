@@ -16,12 +16,12 @@ getAll = async (req, res) => {
 
 
 deleting = async (req, res) => {
-    const name = req.body.name;
+    const id = req.body.id;
     try {
-        if (name == null) {
+        if (id == null) {
         throw new Error("Name missing");
         }
-        await axios.delete("/api/skillcategory", { data: { name: name } });
+        await axios.delete("/api/skillcategory", { data: { id: id } });
         res.redirect("/skillcategory");
     } catch (error) {
         res.status(404).send(error.message);
