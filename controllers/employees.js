@@ -49,8 +49,8 @@ update = async(req, res) =>{
             throw new Error("Essential fields missing")
         }
 
-        await axios.put("/employees",
-            {id: employee.username,
+        await axios.put("/api/employees",
+            {id: employee.id,
             username: employee.username,
             password: employee.password,
             system_role_id: employee.system_role_id,
