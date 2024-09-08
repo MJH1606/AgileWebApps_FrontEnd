@@ -14,6 +14,35 @@ getAll = async (req, res) => {
     });
 };
 
+create = async (req, res) => {
+    let errorMessage;
+    const skillCategory = {
+        name: req.body.name
+    };
+
+    try {
+        if (skillCategory.name == null) {
+            throw new Error("Name field is missing");
+        }
+
+        await axios.post("/api/skillCategory", {
+            name: skillCategory.name
+        });
+
+        res.redirect("/skillCategory");
+    }
+    catch (error) {
+        errorMessage = "Unable to add a record due to connection issue";
+        res.render("skillCategory", {
+            errorMessage
+        });
+    }
+};
+
+addPage = async (req, res) => {
+    res.render("skillCategory/add");
+};
+
 
 deleting = async (req, res) => {
     const id = req.body.id;
@@ -28,4 +57,4 @@ deleting = async (req, res) => {
     }
 };
 
-module.exports = {getAll, deleting};
+module.exports = {getAll, create, deleting, addPage};

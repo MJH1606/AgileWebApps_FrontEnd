@@ -5,6 +5,10 @@ const controller = require('../controllers/skillCategory');
 router.get('', controller.getAll);
 
 router.post('/delete', controller.deleting);
+
+router.get('/addPage', controller.addPage);
+
+router.post('/add', controller.create);
 /*
 router.post('/edit', controller.update);
 
