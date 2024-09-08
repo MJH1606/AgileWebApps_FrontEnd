@@ -9,9 +9,9 @@ router.get('', controller.getAll);
 router.post('/edit', controller.update);
 
 router.post('/getById', controller.getById);
-/*
+
 router.get('/addPage', controller.addPage);
 
 router.post('/add', controller.create);
-*/
+
 module.exports = router;
