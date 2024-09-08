@@ -73,45 +73,66 @@ getById = async(req, res) => {
     try{
         const id =req.body.id;
         const result = await axios.get('/api/employees/' + id);
+        const jobRole = await axios.get('/api/jobRole');
+        const systemRole = await axios.get('/api/systemRole')
+        const managedBy = await axios.get(`/api/employees/systemrole/` + "Manager")
+
         res.render("employees/edit", {
-            result
+            result, jobRole, systemRole, managedBy
         });
     }
     catch(error){
         res.send(error.message);
     }
 };
-/*
+
 addPage = async (req, res) => {
-    res.render("tools/add");
+    const jobRole = await axios.get('/api/jobRole');
+    const systemRole = await axios.get('/api/systemRole')
+    const managedBy = await axios.get(`/api/employees/systemrole/` + "Manager")
+
+    res.render("employees/add", {jobRole, systemRole, managedBy});
 };
 
 create = async (req, res) => {
     let errorMessage;
-    const tool = {
-        description: req.body.description,
-        hire_price: req.body.hire_price,
+    const employee = {
+        username: req.body.username,
+        password: req.body.password,
+        system_role_id: req.body.system_role_id,
+        job_role_id: req.body.job_role_id,
+        first_name: req.body.first_name,
+        surname: req.body.surname,
+        managed_by: req.body.managed_by
     };
-    try {
-        if (tool.description == null || tool.hire_price == null) {
-        throw new Error("Essential fields missing");
+    try{
+        if (employee.username == null ||
+            employee.password == null ||
+            employee.system_role_id == null ||
+            employee.job_role_id == null ||
+            employee.first_name == null ||
+            employee.surname == null
+        ) {
+            throw new Error("Essential fields missing")
         }
-        await axios.post("/tools", {
-        description: tool.description,
-        hire_price: tool.hire_price,
-        });
-        res.redirect("/tools");
-    } catch (error) {
+
+        await axios.post("/api/employees",
+            {username: employee.username,
+            password: employee.password,
+            system_role_id: employee.system_role_id,
+            job_role_id: employee.job_role_id,
+            first_name: employee.first_name,
+            surname: employee.surname,
+            managed_by: employee.managed_by}
+        );
+        res.redirect("/employees");
+    }
+    catch (error){
         errorMessage = "Unable to add a record due to connection issue";
-        res.render("tools/add", {
-        errorMessage,
+        res.render("employees", {
+        errorMessage
         });
     }
 };
 
-
-
-
 module.exports = {update, getById, create, addPage, deleting, getAll};
-*/
-module.exports = {getAll, deleting, getById, update};

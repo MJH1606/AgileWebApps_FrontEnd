@@ -34,8 +34,19 @@
 
                     <div style="margin-bottom: 20px;">
                         <label for="system_role_id">System Role ID</label><br>
-                        <input type="text" id="system_role_id" name="system_role_id" style="width: 100%; border: 1px solid grey;"
-                        value="<%=result.data.system_role_id%>">
+                        <select id="system_role_id" name="system_role_id" style="width: 100%; border: 1px solid grey;">
+                            <% systemRole.data.forEach(function(row) { %>
+
+                                <option value="<%=row.id%>"
+                                    <% if(row.id==result.data.system_role_id)
+                                        {%>selected<%} %>
+                                    ><%=row.role%>
+                                </option>
+                                <%
+                            });
+                            %>
+
+                        </select>
                     </div>
                 </div>
 
@@ -43,8 +54,19 @@
                 <div style="flex: 50%; padding-left: 20px;">
                     <div style="margin-bottom: 20px;">
                         <label for="job_role_id">Job Role ID</label><br>
-                        <input type="text" id="job_role_id" name="job_role_id" style="width: 100%; border: 1px solid grey;"
-                        value="<%=result.data.job_role_id%>">
+                        <select id="job_role_id" name="job_role_id" style="width: 100%; border: 1px solid grey;">
+                            <% jobRole.data.forEach(function(row) { %>
+
+                                <option value="<%=row.id%>"
+                                    <% if(row.id==result.data.job_role_id)
+                                        {%>selected<%} %>
+                                    ><%=row.role%>
+                                </option>
+                                <%
+                            });
+                            %>
+
+                        </select>
                     </div>
 
                     <div style="margin-bottom: 20px;">
@@ -63,8 +85,19 @@
                 <!-- Full width field -->
                 <div style="width: 100%; margin-bottom: 20px;">
                     <label for="managed_by">Managed By</label><br>
-                    <input type="text" id="managed_by" name="managed_by" style="width: 100%; border: 1px solid grey;"
-                    value="<%=result.data.managed_by%>">
+                    <select id="managed_by" name="managed_by" style="width: 100%; border: 1px solid grey;">
+                        <% managedBy.data.forEach(function(row) { %>
+
+                            <option value="<%=row.id%>"
+                                <% if(row.id==result.data.managed_by)
+                                    {%>selected<%} %>
+                                ><%=row.first_name%> <%=row.surname%> (<%=row.username%>)
+                            </option>
+                            <%
+                        });
+                        %>
+
+                    </select>
                 </div>
 
                 <!-- Submit button -->
