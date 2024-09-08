@@ -1,0 +1,24 @@
+<% if(result.skillCategory && result.skillCategory.data && result.skillCategory.data.length > 0) { %>
+    <% result.skillCategory.data.forEach(function(row) { %>
+        <tr>
+            <td class="border px-4 py-2"><%= row.id %></td>
+            <td class="border px-4 py-2"><%= row.name %></td>
+            <td>
+                <form action="/skillcategory/getById" method="POST">
+                    <input type="hidden" name="id" value="<%= row.id %>">
+                    <input type='submit' value="Edit" class="px-2 py-2 hover:text-blue-500"/>
+                </form>
+            </td>
+            <td>
+                <form action="/skillcategory/delete" method="POST">
+                    <input type="hidden" name="id" value="<%= row.id %>">
+                    <input type='submit' value="Delete" class="px-2 py-2 hover:text-red-500"/>
+                </form>
+            </td>
+        </tr>
+    <% }); %>
+<% } else { %>
+    <tr>
+        <td colspan="4">No categories found.</td>
+    </tr>
+<% } %>
