@@ -27,7 +27,7 @@ app.use(compression());
 app.use('/tools', toolsRouter);
 app.use('/employees', employeesRouter)
 app.use('/skills', skillsRouter)
-app.use('/skillcategory', skillCategoryRouter)
+app.use('/skillCategory', skillCategoryRouter)
 
 app.use("/", (req, res) => {
   res.render('index')
