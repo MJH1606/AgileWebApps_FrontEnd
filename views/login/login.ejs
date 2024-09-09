@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+</head>
+    <body >
+        <header>
+            <%- include('../partials/header') %>
+        </header>
+        <main style="margin-left: 0; margin-top: 80px; padding: 20px; background-color: rgb(171, 171, 171); height: calc(100vh - 80px);" class="flex flex-col items-center text-2xl">
+            <h1 class="text-4xl font-extrabold leading-loose px-4">
+            Welcome</h1>
+            <br>
+            <form action="/login" method="POST">
+                <input class="form-control"
+                type="text"
+                name="username"
+                value=""
+                maxlength="20"
+                placeholder="User name"
+                required
+                autofocus
+                ><br>
+                <input class="form-control"
+                type="text"
+                name="password"
+                value=""
+                placeholder="Password"
+                required
+                >
+                <input type="submit" value="Submit">
+            </form>
+            <% if (typeof errorMessage!= "undefined"){ %>
+                <div role="alert">
+                &nbsp;<div class="text-2xl bg-red-500 text-white
+                font-bold rounded-t px-4 py-2">
+                Error - <%= errorMessage %>
+                </div>&nbsp;
+                </div>
+                <% } %>
+        </main>
+        <footer>
+            <%- include('../partials/footer') %>
+        </footer>
+    </body>
+</html>

@@ -1,10 +1,14 @@
 const axios = require("../config/http-common");
+const {getUserInfo} = require("./login")
 
 getAll = async (req, res) => {
     let errorMessage;
     let employees;
     try {
-        employees = await axios.get("/api/employees");
+        employees = await axios.get("/api/employees",
+            {headers:
+            {Authorization: "Bearer "+ req.cookies.accessToken}
+            });
     } catch (error) {
         errorMessage = "Unable to return records";
     }
@@ -19,7 +23,9 @@ deleting = async (req, res) => {
         if (id == null) {
         throw new Error("Id missing");
         }
-        await axios.delete("/api/employees", { data: { id: id } });
+        await axios.delete("/api/employees", { 
+            headers: {Authorization: "Bearer "+ req.cookies.accessToken},
+            data: { id: id } });
         res.redirect("/employees");
     } catch (error) {
         res.status(404).send(error.message);
@@ -50,6 +56,8 @@ update = async(req, res) =>{
         }
 
         await axios.put("/api/employees",
+        {headers: {Authorization: "Bearer "+ req.cookies.accessToken}},
+        
             {id: employee.id,
             username: employee.username,
             password: employee.password,
@@ -72,14 +80,27 @@ update = async(req, res) =>{
 getById = async(req, res) => {
     try{
         const id =req.body.id;
-        const result = await axios.get('/api/employees/' + id);
-        const jobRole = await axios.get('/api/jobRole');
-        const systemRole = await axios.get('/api/systemRole')
-        const managedBy = await axios.get(`/api/employees/systemrole/` + "Manager")
+        const result = await axios.get('/api/employees/' + id,
+        {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+        });
+        const jobRole = await axios.get('/api/jobRole',
+        {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+        });
+        const systemRole = await axios.get('/api/systemRole',
+        {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+        });
+        const managedBy = await axios.get(`/api/employees/systemrole/` + "Manager",
+        {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+        });
 
         res.render("employees/edit", {
             result, jobRole, systemRole, managedBy
-        });
+        },
+        );
     }
     catch(error){
         res.send(error.message);
@@ -87,9 +108,18 @@ getById = async(req, res) => {
 };
 
 addPage = async (req, res) => {
-    const jobRole = await axios.get('/api/jobRole');
-    const systemRole = await axios.get('/api/systemRole')
-    const managedBy = await axios.get(`/api/employees/systemrole/` + "Manager")
+    const jobRole = await axios.get('/api/jobRole',
+    {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+    });
+    const systemRole = await axios.get('/api/systemRole',
+    {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+    });
+    const managedBy = await axios.get(`/api/employees/systemrole/` + "Manager",
+    {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+    });
 
     res.render("employees/add", {jobRole, systemRole, managedBy});
 };
@@ -117,6 +147,9 @@ create = async (req, res) => {
         }
 
         await axios.post("/api/employees",
+        {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+        },
             {username: employee.username,
             password: employee.password,
             system_role_id: employee.system_role_id,

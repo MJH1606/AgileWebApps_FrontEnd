@@ -4,7 +4,10 @@ getAll = async (req, res) => {
     let errorMessage;
     let skillCategory;
     try {
-        skillCategory = await axios.get("/api/skillcategory");
+        skillCategory = await axios.get("/api/skillcategory",
+        {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+        });
     } catch (error) {
         errorMessage = "Unable to return records";
         skillCategory = { data: [] }; // Provide a default value to avoid undefined errors
@@ -25,7 +28,11 @@ create = async (req, res) => {
             throw new Error("Name field is missing");
         }
 
-        await axios.post("/api/skillCategory", {
+        await axios.post("/api/skillCategory",
+        {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+        },
+        {
             name: skillCategory.name
         });
 
@@ -50,7 +57,11 @@ deleting = async (req, res) => {
         if (id == null) {
         throw new Error("Name missing");
         }
-        await axios.delete("/api/skillcategory", { data: { id: id } });
+        await axios.delete("/api/skillcategory",
+        {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+        },
+        { data: { id: id } });
         res.redirect("/skillcategory");
     } catch (error) {
         res.status(404).send(error.message);

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+</head>
+    <body >
+        <header>
+            <%- include('../partials/header') %>
+        </header>
+        <%- include('../partials/navbar') %>
+        <main style="margin-left: 200px; margin-top: 80px; padding: 20px;" class="flex flex-col items-center text-2xl">
+            <h1 class="text-4xl font-extrabold leading-loose px-4">
+            Welcome!</h1>
+            <br>
+            <p><%=data.username%></p>
+        </main>
+        <footer>
+            <%- include('../partials/footer') %>
+        </footer>
+    </body>
+</html>
