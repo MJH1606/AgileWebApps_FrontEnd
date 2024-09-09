@@ -3,7 +3,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+require("dotenv").config()
 
+const homeRouter = require('./routes/home');
+const loginRouter = require('./routes/login');
 const toolsRouter = require('./routes/tools');
 const employeesRouter = require('./routes/employees')
 const skillsRouter = require('./routes/skills');
@@ -24,14 +27,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(compression());
 
+app.use('', loginRouter);
+app.use('/home', homeRouter);
 app.use('/tools', toolsRouter);
 app.use('/employees', employeesRouter)
 app.use('/skills', skillsRouter)
 app.use('/skillCategory', skillCategoryRouter)
-
-app.use("/", (req, res) => {
-  res.render('index')
-})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

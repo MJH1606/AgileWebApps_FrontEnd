@@ -1,6 +1,7 @@
 <div style="background-color: rgb(78, 78, 78); width: 200px; height: 100vh; position: fixed; top: 80px; left: 0; padding: 20px;">
+    <% if (typeof process.env.LOGGED_IN_ROLE !== 'undefined' && process.env.LOGGED_IN_ROLE != 1) { %>
     <ul style="list-style-type: none; padding: 0;">
-        <li style="margin-bottom: 10px;"><a href="#" style="color: white;">Home</a></li>
+        <li style="margin-bottom: 10px;"><a href="/home" style="color: white;">Home</a></li>
         <li style="margin-bottom: 10px;"><a href="/employees" style="color: white;">View All Employees</a></li>
         <li style="margin-bottom: 10px;"><a href="/employees/addPage" style="color: white;">Add Employee</a></li>
         <li style="margin-bottom: 10px;"><a href="/skills" style="color: white;">View All Skills</a></li>
@@ -9,4 +10,16 @@
         <li style="margin-bottom: 10px;"><a href="/skillCategory" style="color: white;">View Skill Categories</a></li>
         <li style="margin-bottom: 10px;"><a href="/skillCategory/addPage" style="color: white;">Add Skill Categories</a></li>
     </ul>
+    <ul style="list-style-type: none; padding: 0;">
+        <li style="margin-bottom: 10px;"><a href="/" style="color: white;">Log Off</a></li>
+    </ul>
+    <% } else { %>
+        <ul style="list-style-type: none; padding: 0;">
+            <li style="margin-bottom: 10px;"><a href="/home" style="color: white;">Home</a></li>
+            <li style="margin-bottom: 10px;"><a href="/skills" style="color: white;">View All Skills</a></li>
+        </ul>
+        <ul style="list-style-type: none; padding: 0;">
+            <li style="margin-bottom: 10px;"><a href="/" style="color: white;">Log Off</a></li>
+        </ul>
+        <% } %>
 </div>

@@ -4,7 +4,10 @@ getAll = async (req, res) => {
     let errorMessage;
     let skills;
     try {
-        skills = await axios.get("/api/skills");
+        skills = await axios.get("/api/skills",
+        {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+        });
     } catch (error) {
         errorMessage = "Unable to return records";
     }
@@ -19,7 +22,11 @@ deleting = async (req, res) => {
         if (name == null) {
         throw new Error("Name missing");
         }
-        await axios.delete("/api/skills", { data: { name: name } });
+        await axios.delete("/api/skills",
+        {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+        }, 
+        { data: { name: name } });
         res.redirect("/skills");
     } catch (error) {
         res.status(404).send(error.message);
