@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../partials/head') %>
+    </head>
+    <body >
+        <header>
+            <%- include('../partials/header') %>
+        </header>
+        <%- include('../partials/navbar') %>
+        <main style="margin-left: 200px; margin-top: 80px; padding: 20px;" class="flex flex-col items-center">
+            <h1 class="text-4xl font-extrabold leading-loose px-4">
+                Edit an Employee</h1>
+            <form action="/employees/editMyDetails" method="POST" style="display: flex; flex-wrap: wrap; max-width: 600px;">
+                <input type="hidden"
+                    name="id"
+                    value="<%=result.data.id%>">
+                <!-- Column 1 -->
+                <div style="flex: 50%; padding-right: 20px;">
+                    <div style="margin-bottom: 20px;">
+                        <label for="username">Username</label><br>
+                        <input type="text" id="username" name="username" required style="width: 100%; border: 1px solid grey;"
+                        pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+                        value="<%=result.data.username%>"
+                        disabled >
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="password">Password</label><br>
+                        <input type="password" id="password" name="password" required style="width: 100%; border: 1px solid grey;"
+                        title="Must contain at least one number, one uppercase and one lowecase letter, and at least 8 or more characters"
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        value="<%=result.data.password%>"
+                        disabled >
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="system_role_id">System Role ID</label><br>
+                        <select disabled id="system_role_id" name="system_role_id" style="width: 100%; border: 1px solid grey;">
+                            <% systemRole.data.forEach(function(row) { %>
+
+                                <option value="<%=row.id%>"
+                                    <% if(row.id==result.data.system_role_id)
+                                        {%>selected<%} %>
+                                    ><%=row.role%>
+                                </option>
+                                <%
+                            });
+                            %>
+
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div style="flex: 50%; padding-left: 20px;">
+                    <div style="margin-bottom: 20px;">
+                        <label for="job_role_id">Job Role ID</label><br>
+                        <select disabled id="job_role_id" name="job_role_id" style="width: 100%; border: 1px solid grey;">
+                            <% jobRole.data.forEach(function(row) { %>
+
+                                <option value="<%=row.id%>"
+                                    <% if(row.id==result.data.job_role_id)
+                                        {%>selected<%} %>
+                                    ><%=row.role%>
+                                </option>
+                                <%
+                            });
+                            %>
+
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="first_name">First Name</label><br>
+                        <input type="text" id="first_name" name="first_name" required style="width: 100%; border: 1px solid grey;"
+                        value="<%=result.data.first_name%>"
+                        disabled >
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="surname">Surname</label><br>
+                        <input type="text" id="surname" name="surname" required style="width: 100%; border: 1px solid grey;"
+                        value="<%=result.data.surname%>"
+                        disabled>
+                    </div>
+                </div>
+
+                <!-- Full width field -->
+                <div style="width: 100%; margin-bottom: 20px;">
+                    <label for="managed_by">Managed By</label><br>
+                    <select disabled id="managed_by" name="managed_by" style="width: 100%; border: 1px solid grey;">
+                        <% managedBy.data.forEach(function(row) { %>
+
+                            <option value="<%=row.id%>"
+                                <% if(row.id==result.data.managed_by)
+                                    {%>selected<%} %>
+                                ><%=row.first_name%> <%=row.surname%> (<%=row.username%>)
+                            </option>
+                            <%
+                        });
+                        %>
+
+                    </select>
+                </div>
+
+                <!-- Submit button -->
+                <div style="width: 100%; text-align: center;">
+                    <button type="submit" value="Submit" style="background-color: pink; padding: 10px 20px; border: none; cursor: pointer;">Edit Details</button>
+                </div>
+            </form>
+            <% if (typeof errorMessage!= "undefined"){ %>
+            <div role="alert">
+                &nbsp;<div
+                    class="text-2xl bg-red-500 text-white
+                    font-bold rounded-t px-4 py-2">
+                    Error - <%= errorMessage %>
+                </div>&nbsp;
+            </div>
+            <% } %>
+            </div>
+        </main>
+        <footer>
+            <%- include('../partials/footer') %>
+        </footer>
+    </body>
+</html>
