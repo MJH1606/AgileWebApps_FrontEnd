@@ -189,9 +189,15 @@ myDetails = async (req, res) => {
             {headers:
             {Authorization: "Bearer "+ req.cookies.accessToken}
             });
-    
+            
+            const skills = await axios.get('/api/employees/' + resId.data.id + '/skills',
+                {headers:
+                {Authorization: "Bearer "+ req.cookies.accessToken}
+                });
+            console.log(skills.data)
+
             res.render("employees/myDetails", {
-                result, jobRole, systemRole, managedBy
+                result, jobRole, systemRole, managedBy, skills
             },
             );
     } catch(error) {
