@@ -168,4 +168,41 @@ create = async (req, res) => {
     }
 };
 
-module.exports = {update, getById, create, addPage, deleting, getAll};
+myDetails = async (req, res) => {
+    try{
+        const resId = await axios.get('/api/employees/getUserInfo', {
+            headers: { Authorization: "Bearer " + req.cookies.accessToken }
+        });
+        const result = await axios.get('/api/employees/' + resId.data.id,
+            {headers:
+            {Authorization: "Bearer "+ req.cookies.accessToken}
+            });
+            const jobRole = await axios.get('/api/jobRole',
+            {headers:
+            {Authorization: "Bearer "+ req.cookies.accessToken}
+            });
+            const systemRole = await axios.get('/api/systemRole',
+            {headers:
+            {Authorization: "Bearer "+ req.cookies.accessToken}
+            });
+            const managedBy = await axios.get(`/api/employees/systemrole/` + "Manager",
+            {headers:
+            {Authorization: "Bearer "+ req.cookies.accessToken}
+            });
+            
+            const skills = await axios.get('/api/employees/' + resId.data.id + '/skills',
+                {headers:
+                {Authorization: "Bearer "+ req.cookies.accessToken}
+                });
+            console.log(skills.data)
+
+            res.render("employees/myDetails", {
+                result, jobRole, systemRole, managedBy, skills
+            },
+            );
+    } catch(error) {
+        res.send(error.message)
+    }
+};
+
+module.exports = {update, getById, create, addPage, deleting, getAll, myDetails};

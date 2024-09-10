@@ -14,4 +14,6 @@ router.get('/addPage', controller.addPage);
 
 router.post('/add', controller.create);
 
+router.get('/myDetails', controller.myDetails);
+
 module.exports = router;
