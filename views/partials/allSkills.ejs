@@ -7,7 +7,7 @@
         <tr>
             <td class="border px-4 py-2"><%= row.name %></td>
             <td class="border px-4 py-2"><%= row.skill_category.name %></td>
-
+            <% if (resId.data.systemRole != '1') { %>
             <td><!-- edit button action -->
                 <form action="/skills/getById" method="POST">
                     <input type="hidden" name="id" value="<%=row.id %>">
@@ -21,7 +21,7 @@
                     <input type='submit' value="Delete" class="px-2 py-2 hover:text-red-500"/>
                 </form>
             </td>
-
+            <% } %>
         </tr>
         <%
         });

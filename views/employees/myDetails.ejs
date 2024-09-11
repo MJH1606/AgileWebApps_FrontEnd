@@ -11,7 +11,7 @@
         <main style="margin-left: 200px; margin-top: 80px; padding: 20px;" class="flex flex-col items-center">
             <h1 class="text-4xl font-extrabold leading-loose px-4">
                 My Details</h1>
-            <form action="/employees/editMyDetails" method="POST" style="display: flex; flex-wrap: wrap; max-width: 600px;">
+            <form action="/employees/getById" method="POST" style="display: flex; flex-wrap: wrap; max-width: 600px;">
                 <input type="hidden"
                     name="id"
                     value="<%=result.data.id%>">
@@ -133,7 +133,8 @@
 
                                     <td><!-- edit button action -->
                                         <form action="#" method="POST">
-                                            <input type="hidden" name="id" value="<%=skill.skill %>">
+                                            <input type="hidden" name="skill" value="<%=skill.skill %>">
+                                            <input type="hidden" name="id" value="<%=result.data.id %>">
                                             <input type='submit' value="Edit Skill" class="px-2 py-2 hover:text-blue-500;" style="cursor: pointer"/>
                                         </form>
                                     </td>

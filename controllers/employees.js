@@ -80,6 +80,9 @@ update = async(req, res) =>{
 getById = async(req, res) => {
     try{
         const id =req.body.id;
+        const resId = await axios.get('/api/employees/getUserInfo', {
+            headers: { Authorization: "Bearer " + req.cookies.accessToken }
+        });
         const result = await axios.get('/api/employees/' + id,
         {headers:
         {Authorization: "Bearer "+ req.cookies.accessToken}
@@ -98,7 +101,7 @@ getById = async(req, res) => {
         });
 
         res.render("employees/edit", {
-            result, jobRole, systemRole, managedBy
+            result, jobRole, systemRole, managedBy, resId
         },
         );
     }
@@ -194,7 +197,6 @@ myDetails = async (req, res) => {
                 {headers:
                 {Authorization: "Bearer "+ req.cookies.accessToken}
                 });
-            console.log(skills.data)
 
             res.render("employees/myDetails", {
                 result, jobRole, systemRole, managedBy, skills
