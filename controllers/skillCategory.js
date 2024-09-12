@@ -29,12 +29,13 @@ create = async (req, res) => {
         }
 
         await axios.post("/api/skillCategory",
-        {headers:
-        {Authorization: "Bearer "+ req.cookies.accessToken}
-        },
         {
             name: skillCategory.name
-        });
+        },
+        {headers:
+            {Authorization: "Bearer "+ req.cookies.accessToken}
+        }
+    );
 
         res.redirect("/skillCategory");
     }
@@ -57,12 +58,13 @@ deleting = async (req, res) => {
         if (id == null) {
         throw new Error("Name missing");
         }
-        await axios.delete("/api/skillcategory",
-        {headers:
-        {Authorization: "Bearer "+ req.cookies.accessToken}
-        },
-        { data: { id: id } });
-        res.redirect("/skillcategory");
+        await axios.delete("/api/skillCategory",
+        { data: { id: id },
+        headers:
+            {Authorization: "Bearer "+ req.cookies.accessToken}
+        }
+    );
+        res.redirect("/skillCategory");
     } catch (error) {
         res.status(404).send(error.message);
     }

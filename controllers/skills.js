@@ -23,10 +23,9 @@ deleting = async (req, res) => {
         throw new Error("Name missing");
         }
         await axios.delete("/api/skills",
-        {headers:
-        {Authorization: "Bearer "+ req.cookies.accessToken}
-        }, 
-        { data: { name: name } });
+        { data: { name: name },
+        headers:
+            {Authorization: "Bearer "+ req.cookies.accessToken} });
         res.redirect("/skills");
     } catch (error) {
         res.status(404).send(error.message);

@@ -52,11 +52,11 @@
                                 <td class="border px-4 py-2"><%= row.name %></td>
                                 <td>
                                     <div class="button-group"> <!-- Button container -->
-                                        <form action="/skillcategory/getById" method="POST" style="display: inline;">
+                                        <form action="/skillCategory/getById" method="POST" style="display: inline;">
                                             <input type="hidden" name="id" value="<%= row.id %>">
                                             <input type='submit' value="Edit" class="px-2 py-2 hover:text-blue-500"/>
                                         </form>
-                                        <form action="/skillcategory/delete" method="POST" style="display: inline;">
+                                        <form action="/skillCategory/delete" method="POST" style="display: inline;">
                                             <input type="hidden" name="id" value="<%= row.id %>">
                                             <input type='submit' value="Delete" class="px-2 py-2 hover:text-red-500"/>
                                         </form>
