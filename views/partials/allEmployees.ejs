@@ -26,6 +26,14 @@
                 </form>
             </td>
 
+            <td><!-- delete button action -->
+                <form action="/skillDetails" method="POST">
+                    <input type="hidden" name="id" value="<%=row.id %>">
+                    <input type="hidden" name="username" value="<%= row.username %>">
+                    <input type='submit' value="View Skills" class="px-2 py-2 hover:text-green-500"/>
+                </form>
+            </td>
+
         </tr>
         <%
         });
