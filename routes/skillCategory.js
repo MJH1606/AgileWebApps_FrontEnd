@@ -9,11 +9,11 @@ router.post('/delete', controller.deleting);
 router.get('/addPage', controller.addPage);
 
 router.post('/add', controller.create);
-/*
+
 router.post('/edit', controller.update);
 
 router.post('/getById', controller.getById);
-
+/*
 router.get('/addPage', controller.addPage);
 
 router.post('/add', controller.create);

@@ -22,6 +22,7 @@ deleting = async (req, res) => {
         if (id == null) {
         throw new Error("Id missing");
         }
+      
         await axios.delete("/api/employees", { 
             data: { id: id },
             headers: {Authorization: "Bearer "+ req.cookies.accessToken}});
@@ -63,7 +64,6 @@ update = async(req, res) =>{
             first_name: employee.first_name,
             surname: employee.surname,
             managed_by: employee.managed_by},
-
             {headers: {Authorization: "Bearer "+ req.cookies.accessToken}},
         );
         res.redirect("/employees");
@@ -158,8 +158,7 @@ create = async (req, res) => {
             managed_by: employee.managed_by},
             {headers:
                 {Authorization: "Bearer "+ req.cookies.accessToken}
-                }
-        );
+            });
         res.redirect("/employees");
     }
     catch (error){
