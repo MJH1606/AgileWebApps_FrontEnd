@@ -113,13 +113,14 @@ getById = (req, res) => {
 
 getAll = async (req, res) => {
     const id = req.body.id;
+    const username = req.body.username
     try{
         const skills = await axios.get('/api/employees/' + id + '/skills',
         {headers:
         {Authorization: "Bearer "+ req.cookies.accessToken}
         });
 
-        res.render('skillDetails/viewAll', {id, skills})
+        res.render('skillDetails/viewAll', {id, username, skills})
     } catch (error) {
         res.status(404).send(error.message);
     }
