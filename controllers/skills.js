@@ -16,6 +16,33 @@ getAll = async (req, res) => {
     });
 };
 
+getByName = async (req, res) => {
+    const name = req.params.name; // Get 'name' from the URL params
+    try {
+        // Fetch the skill by its name (since it's the unique identifier in your case)
+        const skill = await Skill.findOne({
+            where: { name: name }, // Use 'name' instead of 'id'
+            include: [
+                {
+                    model: SkillCategory,
+                    as: 'category',
+                    attributes: ['id', 'name'], // Keep category details
+                    required: true
+                }
+            ]
+        });
+
+        if (!skill) {
+            throw new Error(`Unable to find skill with name ${name}`);
+        }
+
+        // Render the skill edit page with the fetched skill
+        res.render('skills/edit', { skill });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 deleting = async (req, res) => {
     const name = req.body.name;
     try {
@@ -32,7 +59,7 @@ deleting = async (req, res) => {
         res.status(404).send(error.message);
     }
 };
-/*
+
 update = async(req, res) =>{
     let errorMessage;
     const employee = {
@@ -76,21 +103,30 @@ update = async(req, res) =>{
     }
 };
 
-getById = async(req, res) => {
-    try{
-        const id =req.body.id;
-        const result = await axios.get('/api/employees/' + id);
-        res.render("/employees/edit", {
-            result
+ getById = async (req, res) => {
+    const id = req.params.id;
+    try {
+        // Fetch the skill by ID
+        const skill = await Skill.findByPk(id, {
+            include: [
+                {
+                    model: SkillCategory,
+                    as: 'category',
+                    attributes: ['id', 'name'],
+                    required: true
+                }
+            ]
         });
-    }
-    catch(error){
-        res.send(error.message);
-    }
-};
 
-addPage = async (req, res) => {
-    res.render("tools/add");
+        if (!skill) {
+            throw new Error(`Unable to find skill with id ${id}`);
+        }
+
+        // Render the skill edit page with the fetched skill
+        res.render('skills/edit', { skill });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 };
 
 create = async (req, res) => {
@@ -119,6 +155,4 @@ create = async (req, res) => {
 
 
 
-module.exports = {update, getById, create, addPage, deleting, getAll};
-*/
-module.exports = {getAll, deleting};
+module.exports = {update, getByName, getById, create, addPage, deleting, getAll};

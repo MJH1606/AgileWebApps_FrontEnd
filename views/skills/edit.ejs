@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head') %>
+</head>
+<body>
+  <header>
+    <%- include('../partials/header') %>
+  </header>
+  <%- include('../partials/navbar') %>
+  
+  <main style="margin-left: 200px; margin-top: 80px; padding: 20px;" class="flex flex-col items-center text-2xl">
+    <h1 class="text-4xl font-extrabold leading-loose px-4">Edit Skill</h1>
+    
+    <form action="/skills/<%= skill.name %>?_method=PUT" method="POST">
+      <label for="name">Skill Name:</label>
+      <input type="text" id="name" name="name" value="<%= skill.name %>" required>
+      
+      <label for="category">Category:</label>
+      <input type="text" id="category" name="category" value="<%= skill.category %>" required>
+      
+      <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
+    </form>
+  </main>
+
+  <footer>
+    <%- include('../partials/footer') %>
+  </footer>
+</body>
+</html>
