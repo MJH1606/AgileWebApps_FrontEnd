@@ -29,12 +29,13 @@ create = async (req, res) => {
         }
 
         await axios.post("/api/skillCategory",
-        {headers:
-        {Authorization: "Bearer "+ req.cookies.accessToken}
-        },
         {
             name: skillCategory.name
-        });
+        },
+        {headers:
+            {Authorization: "Bearer "+ req.cookies.accessToken}
+        }
+    );
 
         res.redirect("/skillCategory");
     }
@@ -57,15 +58,70 @@ deleting = async (req, res) => {
         if (id == null) {
         throw new Error("Name missing");
         }
-        await axios.delete("/api/skillcategory",
-        {headers:
-        {Authorization: "Bearer "+ req.cookies.accessToken}
-        },
-        { data: { id: id } });
-        res.redirect("/skillcategory");
+        await axios.delete("/api/skillCategory",
+        { data: { id: id },
+        headers:
+            {Authorization: "Bearer "+ req.cookies.accessToken}
+        }
+    );
+        res.redirect("/skillCategory");
     } catch (error) {
         res.status(404).send(error.message);
     }
 };
 
-module.exports = {getAll, create, deleting, addPage};
+getById = async(req, res) => {
+    try{
+        const id =req.body.id;
+        const result = await axios.get('/api/skillCategory/' + id,
+        {headers:
+        {Authorization: "Bearer "+ req.cookies.accessToken}
+        });
+       
+
+        res.render("skillCategory/edit", {
+            result
+        },
+        );
+    }
+    catch(error){
+        res.send(error.message);
+    }
+};
+
+update = async (req, res) => {
+    let errorMessage;
+    const skillCategory = {
+        id: req.body.id,
+        name: req.body.name,
+    };
+
+    try {
+        // Check if the name field is empty or missing
+        if (!skillCategory.name || skillCategory.name.trim() === '') {
+            throw new Error("Name field cannot be empty");
+        }
+
+        await axios.put("/api/skillCategory",
+            {
+                id: skillCategory.id,
+                name: skillCategory.name,
+            },
+            { headers: { Authorization: "Bearer " + req.cookies.accessToken } },
+        );
+        res.redirect("/skillCategory");
+    } catch (error) {
+        errorMessage = error.message || "Unable to edit a record due to connection issue";
+        res.render("skillCategory/edit", {
+            errorMessage,
+            skillCategory: {
+                id: req.body.id,
+                name: req.body.name // Keep the current name for re-population
+            }
+        });
+    }
+};
+
+
+
+module.exports = {getAll, create, deleting, addPage, getById, update};

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../partials/head') %>
+    </head>
+    <body >
+        <header>
+            <%- include('../partials/header') %>
+        </header>
+        <%- include('../partials/navbar') %>
+        <main style="margin-left: 200px; margin-top: 80px; padding: 20px;" class="flex flex-col items-center">
+            <h1 class="text-4xl font-extrabold leading-loose px-4">
+                Edit Allocated Skill Details</h1>
+            <form action="/skillDetails/edit" method="POST" style="display: flex; flex-wrap: wrap; max-width: 600px;">
+                <input type="hidden"
+                    name="id"
+                    value="<%=skillDetails.id%>">
+
+                <!-- Column 1 -->
+                <div style="flex: 50%; padding-right: 20px;">
+                    <div style="margin-bottom: 20px;">
+                        <label for="skill">Skill Name</label><br>
+                        <input type="text" id="skill" name="skill" readonly style="width: 100%; border: 1px solid grey;"
+                        value="<%=skillDetails.skill%>">
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="expiration">Expiration</label><br>
+                        <input type="date" id="expiration" name="expiration" style="width: 100%; border: 1px solid grey;"
+                        title=""
+                        
+                        value="<%=skillDetails.expiration%>">
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div style="flex: 50%; padding-left: 20px;">
+
+                    <div style="margin-bottom: 20px;">
+                        <label for="level">Skill Level</label><br>
+                        <input type="number"
+                        min="1"
+                        max="3"
+                        step="1"
+                        id="level" name="level" required style="width: 100%; border: 1px solid grey;"
+                        value="<%=skillDetails.level%>">
+                    </div>
+
+                </div>
+
+                <!-- Full width field -->
+                <div style="width: 100%; margin-bottom: 20px;">
+                    <div style="margin-bottom: 20px;"></div>
+                        <label for="notes">Notes</label><br>
+                        <input type="text" id="notes" name="notes" required style="width: 100%; border: 1px solid grey;"
+                        value="<%=skillDetails.notes%>">
+                    </div>
+                </div>
+                <!-- Submit button -->
+                <div style="width: 100%; text-align: center;">
+                    <button type="submit" value="Submit" style="background-color: pink; padding: 10px 20px; border: none; cursor: pointer;">Submit</button>
+                </div>
+            </form>
+            <% if (typeof errorMessage!= "undefined"){ %>
+            <div role="alert">
+                &nbsp;<div
+                    class="text-2xl bg-red-500 text-white
+                    font-bold rounded-t px-4 py-2">
+                    Error - <%= errorMessage %>
+                </div>&nbsp;
+            </div>
+            <% } %>
+            </div>
+        </main>
+        <footer>
+            <%- include('../partials/footer') %>
+        </footer>
+    </body>
+</html>

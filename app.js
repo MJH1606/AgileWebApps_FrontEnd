@@ -11,6 +11,7 @@ const toolsRouter = require('./routes/tools');
 const employeesRouter = require('./routes/employees')
 const skillsRouter = require('./routes/skills');
 const skillCategoryRouter = require('./routes/skillCategory');
+const skillDetailsRouter = require('./routes/skillDetails')
 
 const compression = require('compression');
 
@@ -30,9 +31,10 @@ app.use(compression());
 app.use('', loginRouter);
 app.use('/home', homeRouter);
 app.use('/tools', toolsRouter);
-app.use('/employees', employeesRouter)
-app.use('/skills', skillsRouter)
-app.use('/skillCategory', skillCategoryRouter)
+app.use('/employees', employeesRouter);
+app.use('/skills', skillsRouter);
+app.use('/skillCategory', skillCategoryRouter);
+app.use('/skillDetails', skillDetailsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

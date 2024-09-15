@@ -11,7 +11,7 @@
         <main style="margin-left: 200px; margin-top: 80px; padding: 20px;" class="flex flex-col items-center">
             <h1 class="text-4xl font-extrabold leading-loose px-4">
                 My Details</h1>
-            <form action="/employees/editMyDetails" method="POST" style="display: flex; flex-wrap: wrap; max-width: 600px;">
+            <form action="/employees/getById" method="POST" style="display: flex; flex-wrap: wrap; max-width: 600px;">
                 <input type="hidden"
                     name="id"
                     value="<%=result.data.id%>">
@@ -110,7 +110,7 @@
                 </div>
             </form>
                     
-                    <div style="display: flex; flex-wrap: wrap; max-width: 600px;">
+                    <div style="display: flex; flex-wrap: wrap; max-width: 600px; justify-content: center;">
                     <h1 style="margin-top: 20px;">Skills List</h1>
 
                     <!-- Skills Table -->
@@ -132,16 +132,31 @@
                                     <td style="border: 1px solid black; padding: 10px;"><%= skill.notes %></td>
 
                                     <td><!-- edit button action -->
-                                        <form action="#" method="POST">
-                                            <input type="hidden" name="id" value="<%=skill.skill %>">
-                                            <input type='submit' value="Edit Skill" class="px-2 py-2 hover:text-blue-500;" style="cursor: pointer"/>
+                                        <form action="/skillDetails/getById" method="POST">
+                                            <input type="hidden" name="skill" value="<%=skill.skill %>">
+                                            <input type="hidden" name="level" value="<%=skill.level %>">
+                                            <input type="hidden" name="expiration" value="<%=skill.expiration %>">
+                                            <input type="hidden" name="notes" value="<%=skill.notes %>">
+                                            <input type="hidden" name="id" value="<%=result.data.id %>">
+                                            <input type='submit' value="Edit" class="px-2 py-2 hover:text-blue-500;" style="cursor: pointer"/>
                                         </form>
                                     </td>
+                                    <td>
+                                        <form action="/skillDetails/delete" method="POST">
+                                            <input type="hidden" name="skill" value="<%=skill.skill %>">
+                                            <input type="hidden" name="id" value="<%=result.data.id %>">
+                                            <input type='submit' value="Delete" class="px-2 py-2 hover:text-blue-500;" style="cursor: pointer"/>
+                                        </form>
+                                    </td>
+                                        
                                 </tr>
                             <% }); %>
                         </tbody>
                     </table>
-                    
+                    <form action="/skillDetails/addPage" method="POST" style="margin-top: 20px;">
+                        <input type="hidden" name="id" value="<%=result.data.id %>">
+                        <input type='submit' value="Add Skill" class="px-2 py-2 hover:text-blue-500;" style="cursor: pointer"/>
+                    </form>
                 </div>
             <% if (typeof errorMessage!= "undefined"){ %>
             <div role="alert">

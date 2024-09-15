@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../partials/head') %>
+    </head>
+    <body >
+        <header>
+            <%- include('../partials/header') %>
+        </header>
+        <%- include('../partials/navbar') %>
+        <main style="margin-left: 200px; margin-top: 80px; padding: 20px;" class="flex flex-col items-center">
+            <h1 class="text-4xl font-extrabold leading-loose px-4">
+                Employee Skills</h1>
+                <h1 style="font-weight: bold;" class="text-2xl">For <%=username %></h1>
+                    <div style="display: flex; flex-wrap: wrap; max-width: 600px; justify-content: center;">
+                    <h1 style="margin-top: 20px;">Skills List</h1>
+
+                    <!-- Skills Table -->
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Skill</th>
+                                <th>Level</th>
+                                <th>Expiration</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% skills.data.skills.forEach(function(skill, index) { %>
+                                <tr data-index="<%= index %>"">
+                                    <td style="border: 1px solid black; padding: 10px;"><%= skill.skill %></td>
+                                    <td style="border: 1px solid black; padding: 10px;"><%= skill.level %></td>
+                                    <td style="border: 1px solid black; padding: 10px;"><%= skill.expiration %></td>
+                                    <td style="border: 1px solid black; padding: 10px;"><%= skill.notes %></td>
+
+                                    <td><!-- edit button action -->
+                                        <form action="/skillDetails/getById" method="POST">
+                                            <input type="hidden" name="skill" value="<%=skill.skill %>">
+                                            <input type="hidden" name="level" value="<%=skill.level %>">
+                                            <input type="hidden" name="expiration" value="<%=skill.expiration %>">
+                                            <input type="hidden" name="notes" value="<%=skill.notes %>">
+                                            <input type="hidden" name="id" value="<%=id %>">
+                                            <input type='submit' value="Edit" class="px-2 py-2 hover:text-blue-500;" style="cursor: pointer"/>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="/skillDetails/delete" method="POST">
+                                            <input type="hidden" name="skill" value="<%=skill.skill %>">
+                                            <input type="hidden" name="id" value="<%=id %>">
+                                            <input type='submit' value="Delete" class="px-2 py-2 hover:text-blue-500;" style="cursor: pointer"/>
+                                        </form>
+                                    </td>
+                                        
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                    <form action="/skillDetails/addPage" method="POST" style="margin-top: 20px;">
+                        <input type="hidden" name="id" value="<%=id %>">
+                        <input type='submit' value="Add Skill" class="px-2 py-2 hover:text-blue-500;" style="cursor: pointer"/>
+                    </form>
+                </div>
+            <% if (typeof errorMessage!= "undefined"){ %>
+            <div role="alert">
+                &nbsp;<div
+                    class="text-2xl bg-red-500 text-white
+                    font-bold rounded-t px-4 py-2">
+                    Error - <%= errorMessage %>
+                </div>&nbsp;
+            </div>
+            <% } %>
+            </div>
+        </main>
+        <footer>
+            <%- include('../partials/footer') %>
+        </footer>
+    </body>
+</html>

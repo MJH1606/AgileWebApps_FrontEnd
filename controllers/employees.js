@@ -1,5 +1,4 @@
 const axios = require("../config/http-common");
-const {getUserInfo} = require("./login")
 
 getAll = async (req, res) => {
     let errorMessage;
@@ -23,9 +22,10 @@ deleting = async (req, res) => {
         if (id == null) {
         throw new Error("Id missing");
         }
+      
         await axios.delete("/api/employees", { 
-            headers: {Authorization: "Bearer "+ req.cookies.accessToken},
-            data: { id: id } });
+            data: { id: id },
+            headers: {Authorization: "Bearer "+ req.cookies.accessToken}});
         res.redirect("/employees");
     } catch (error) {
         res.status(404).send(error.message);
@@ -56,8 +56,6 @@ update = async(req, res) =>{
         }
 
         await axios.put("/api/employees",
-        {headers: {Authorization: "Bearer "+ req.cookies.accessToken}},
-        
             {id: employee.id,
             username: employee.username,
             password: employee.password,
@@ -65,7 +63,8 @@ update = async(req, res) =>{
             job_role_id: employee.job_role_id,
             first_name: employee.first_name,
             surname: employee.surname,
-            managed_by: employee.managed_by}
+            managed_by: employee.managed_by},
+            {headers: {Authorization: "Bearer "+ req.cookies.accessToken}},
         );
         res.redirect("/employees");
     }
@@ -80,6 +79,9 @@ update = async(req, res) =>{
 getById = async(req, res) => {
     try{
         const id =req.body.id;
+        const resId = await axios.get('/api/employees/getUserInfo', {
+            headers: { Authorization: "Bearer " + req.cookies.accessToken }
+        });
         const result = await axios.get('/api/employees/' + id,
         {headers:
         {Authorization: "Bearer "+ req.cookies.accessToken}
@@ -98,7 +100,7 @@ getById = async(req, res) => {
         });
 
         res.render("employees/edit", {
-            result, jobRole, systemRole, managedBy
+            result, jobRole, systemRole, managedBy, resId
         },
         );
     }
@@ -147,17 +149,16 @@ create = async (req, res) => {
         }
 
         await axios.post("/api/employees",
-        {headers:
-        {Authorization: "Bearer "+ req.cookies.accessToken}
-        },
             {username: employee.username,
             password: employee.password,
             system_role_id: employee.system_role_id,
             job_role_id: employee.job_role_id,
             first_name: employee.first_name,
             surname: employee.surname,
-            managed_by: employee.managed_by}
-        );
+            managed_by: employee.managed_by},
+            {headers:
+                {Authorization: "Bearer "+ req.cookies.accessToken}
+            });
         res.redirect("/employees");
     }
     catch (error){
@@ -194,7 +195,6 @@ myDetails = async (req, res) => {
                 {headers:
                 {Authorization: "Bearer "+ req.cookies.accessToken}
                 });
-            console.log(skills.data)
 
             res.render("employees/myDetails", {
                 result, jobRole, systemRole, managedBy, skills

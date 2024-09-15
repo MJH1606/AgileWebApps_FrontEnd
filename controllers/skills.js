@@ -3,16 +3,22 @@ const axios = require("../config/http-common");
 getAll = async (req, res) => {
     let errorMessage;
     let skills;
+    let resId;
     try {
         skills = await axios.get("/api/skills",
         {headers:
         {Authorization: "Bearer "+ req.cookies.accessToken}
         });
+        resId = await axios.get('/api/employees/getUserInfo', {
+            headers: { Authorization: "Bearer " + req.cookies.accessToken }
+        });
+
+        
     } catch (error) {
-        errorMessage = "Unable to return records";
+        res.send("Unable to return records");
     }
     res.render("skills/getAll", {
-        result: { skills, errorMessage },
+        result: { skills, errorMessage }, resId
     });
 };
 
