@@ -1,30 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <%- include('../partials/head') %>
-</head>
-<body>
-  <header>
-    <%- include('../partials/header') %>
-  </header>
-  <%- include('../partials/navbar') %>
-  
-  <main style="margin-left: 200px; margin-top: 80px; padding: 20px;" class="flex flex-col items-center text-2xl">
-    <h1 class="text-4xl font-extrabold leading-loose px-4">Edit Skill</h1>
-    
-    <form action="/skills/<%= skill.name %>?_method=PUT" method="POST">
-      <label for="name">Skill Name:</label>
-      <input type="text" id="name" name="name" value="<%= skill.name %>" required>
-      
-      <label for="category">Category:</label>
-      <input type="text" id="category" name="category" value="<%= skill.category %>" required>
-      
-      <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
-    </form>
-  </main>
+    <head>
+        <%- include('../partials/head') %>
+    </head>
+    <body >
+        <header>
+          <%- include('../partials/header') %>
+        </header>
+        <%- include('../partials/navbar') %>
+        <main style="margin-left: 200px; margin-top: 80px; padding: 20px;" class="flex flex-col items-center">
+            <h1 class="text-4xl font-extrabold leading-loose px-4">
+                Edit Skill</h1>
+            <form action="/skills/edit" method="POST" style="display: flex; flex-direction: column; max-width: 600px;">
+                
+                <div style="margin-bottom: 20px; width: 100%;">
+                    <label for="name">Skill Name</label><br>
+                    <input type="text" id="name" name="name" required style="width: 100%; border: 1px solid grey;"
+                    value="<%=skill.data[0].name%>">
+                </div>
 
-  <footer>
-    <%- include('../partials/footer') %>
-  </footer>
-</body>
+                <div style="margin-bottom: 20px; width: 100%;">
+                  <label for="category">Skill Category</label><br>
+                  <select id="category" name="category" style="width: 100%; border: 1px solid grey;">
+                      <% skillCategory.data.forEach(function(row) { %>
+
+                          <option value="<%=row.id%>"
+                              <% if(row.name==skill.data[0].category)
+                                  {%>selected<%} %>
+                              ><%=row.name%>
+                          </option>
+                          <%
+                      });
+                      %>
+
+                  </select>
+                </div>
+
+                <!-- Submit button -->
+                <div style="width: 100%; text-align: center;">
+                    <button type="submit" value="Submit" style="background-color: pink; padding: 10px 20px; border: none; cursor: pointer;">Submit</button>
+                </div>
+            </form>
+
+            <% if (typeof errorMessage!= "undefined"){ %>
+            <div role="alert">
+                &nbsp;<div
+                    class="text-2xl bg-red-500 text-white
+                    font-bold rounded-t px-4 py-2">
+                    Error - <%= errorMessage %>
+                </div>&nbsp;
+            </div>
+            <% } %>
+        </main>
+        <footer>
+            <%- include('../partials/footer') %>
+        </footer>
+    </body>
 </html>
