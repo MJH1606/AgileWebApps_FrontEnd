@@ -5,12 +5,13 @@
         <!-- loop through each of the rows returned-->
         <% result.skills.data.forEach(function(row) { %>
         <tr>
+            
             <td class="border px-4 py-2"><%= row.name %></td>
             <td class="border px-4 py-2"><%= row.skill_category.name %></td>
             <% if (resId.data.systemRole != '1') { %>
             <td><!-- edit button action -->
-                <form action="/skills/getById" method="POST">
-                    <input type="hidden" name="id" value="<%=row.id %>">
+                <form action="/skills/getByName" method="POST">
+                    <input type="hidden" name="name" value="<%=row.name %>">
                     <input type='submit' value="Edit" class="px-2 py-2 hover:text-blue-500"/>
                 </form>
             </td>
