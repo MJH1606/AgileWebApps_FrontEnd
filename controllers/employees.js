@@ -54,7 +54,9 @@ update = async(req, res) =>{
         ) {
             throw new Error("Essential fields missing")
         }
-
+        const userInfo = await axios.get('/api/employees/getUserInfo', {
+            headers: { Authorization: "Bearer " + req.cookies.accessToken }
+        });
         await axios.put("/api/employees",
             {id: employee.id,
             username: employee.username,
@@ -66,7 +68,14 @@ update = async(req, res) =>{
             managed_by: employee.managed_by},
             {headers: {Authorization: "Bearer "+ req.cookies.accessToken}},
         );
-        res.redirect("/employees");
+        process.env.LOGGED_IN_ROLE = userInfo.data.systemRole
+        process.env.LOGGED_IN_ID = userInfo.data.id
+        if (userInfo.data.systemRole == 1){
+            res.redirect("/employees/myDetails")
+        } else {
+            res.redirect("/employees");
+        }
+        
     }
     catch (error){
         errorMessage = "Unable to edit a record due to connection issue";
@@ -82,6 +91,8 @@ getById = async(req, res) => {
         const resId = await axios.get('/api/employees/getUserInfo', {
             headers: { Authorization: "Bearer " + req.cookies.accessToken }
         });
+        process.env.LOGGED_IN_ID = resId.data.id;
+        process.env.LOGGED_IN_ROLE = resId.data.systemRole;
         const result = await axios.get('/api/employees/' + id,
         {headers:
         {Authorization: "Bearer "+ req.cookies.accessToken}
@@ -174,6 +185,8 @@ myDetails = async (req, res) => {
         const resId = await axios.get('/api/employees/getUserInfo', {
             headers: { Authorization: "Bearer " + req.cookies.accessToken }
         });
+        process.env.LOGGED_IN_ID = resId.data.id;
+        process.env.LOGGED_IN_ROLE = resId.data.systemRole;
         const result = await axios.get('/api/employees/' + resId.data.id,
             {headers:
             {Authorization: "Bearer "+ req.cookies.accessToken}
